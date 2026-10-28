@@ -115,3 +115,93 @@ export const STATUS_LABELS: Record<IncidentStatus, string> = {
   UNDER_REVIEW: "Under Review",
   RESOLVED: "Resolved",
 };
+
+// ── Personal Security Assessment Types ───────────────────────────────────────
+
+export type AssessmentCategory = "EXCELLENT" | "GOOD" | "FAIR" | "POOR";
+export type FindingStatus = "SECURE" | "MODERATE" | "VULNERABLE" | "NEEDS_ATTENTION";
+export type RecommendationPriority = "HIGH" | "MEDIUM" | "LOW";
+
+export interface PracticeFinding {
+  practiceKey: string;
+  title: string;
+  answerKey: string;
+  answerLabel: string;
+  score: number;
+  maxScore: number;
+  status: FindingStatus;
+  explanation: string;
+  recommendation: string | null;
+  taskTitle: string | null;
+  taskDescription: string | null;
+}
+
+export interface AssessmentRecommendation {
+  recommendationId: string;
+  practiceKey: string;
+  title: string;
+  priority: RecommendationPriority;
+  description: string;
+  taskTitle: string;
+  taskDescription: string;
+}
+
+export interface SecurityAssessment {
+  assessmentId: string;
+  userId: string;
+  score: number;
+  category: AssessmentCategory;
+  categoryLabel: string;
+  riskSummary: string;
+  scoreInterpretation: string;
+  disclaimer: string;
+  answers: Record<string, string>;
+  findings: PracticeFinding[];
+  recommendations: AssessmentRecommendation[];
+  createdAt: string;
+}
+
+export interface AssessmentRequest {
+  twoFactorAuth: string;
+  passwordReuse: string;
+  strongPasswords: string;
+  systemUpdates: string;
+  linkVerification: string;
+  recoveryMethods: string;
+  publicWifiPrecautions: string;
+  phishingRecognition: string;
+}
+
+export const ASSESSMENT_CATEGORY_LABELS: Record<AssessmentCategory, string> = {
+  EXCELLENT: "Excellent Security Posture",
+  GOOD: "Good Security Posture",
+  FAIR: "Fair Security Posture",
+  POOR: "At-Risk Security Posture",
+};
+
+export const FINDING_STATUS_LABELS: Record<FindingStatus, string> = {
+  SECURE: "Secure",
+  MODERATE: "Moderate Risk",
+  VULNERABLE: "Vulnerable",
+  NEEDS_ATTENTION: "Needs Attention",
+};
+
+export type ComparisonStatus =
+  | "IMPROVED"
+  | "WORSENED"
+  | "NO_CHANGE"
+  | "SINGLE_ASSESSMENT"
+  | "NO_HISTORY";
+
+export interface AssessmentComparison {
+  latestScore: number | null;
+  previousScore: number | null;
+  scoreDifference: number | null;
+  signedDifference: string | null;
+  statusMessage: string | null;
+  status: ComparisonStatus;
+  hasComparison: boolean;
+  hasHistory: boolean;
+  latestAssessmentId?: string | null;
+  previousAssessmentId?: string | null;
+}

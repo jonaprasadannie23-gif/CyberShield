@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { Layout } from "./components/Layout";
 import { DashboardPage } from "./pages/DashboardPage";
+import { AssessmentPage } from "./pages/AssessmentPage";
 import { IncidentDetailPage } from "./pages/IncidentDetailPage";
 import { IncidentFormPage } from "./pages/IncidentFormPage";
 import { IncidentHistoryPage } from "./pages/IncidentHistoryPage";
@@ -34,6 +35,8 @@ export default function App() {
       <Route path="/register" element={<Guest><RegisterPage /></Guest>} />
       <Route element={<Guard><Layout /></Guard>}>
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/assessment" element={<AssessmentPage />} />
+        <Route path="/assessment/:id" element={<AssessmentPage />} />
         <Route path="/incidents/new" element={<IncidentFormPage />} />
         <Route path="/incidents/:id/edit" element={<IncidentFormPage />} />
         <Route path="/incidents/:id" element={<IncidentDetailPage />} />
